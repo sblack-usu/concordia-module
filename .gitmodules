@@ -1,0 +1,4 @@
+[submodule "Assets/UnityOSC"]
+	path = Assets/UnityOSC
+	url = git@github.com:n1ckfg/UnityOSC.git
+	branch = master
