@@ -4,9 +4,11 @@
 Temp/
 Library/
 Builds/
+builds/
 mysound.wav
 ScreenshotFolder/
 .vs/
+.out/
 UnityPackageManager/
 
 # ===================================== #

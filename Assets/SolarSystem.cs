@@ -25,7 +25,9 @@ public class SolarSystem : MonoBehaviour {
     {
         for(int i=0; i< numLines; i++)
         {
-            lines.Add(Instantiate(linePrefab));
+            LineRenderer line = Instantiate(linePrefab);
+            line.transform.parent = transform;
+            lines.Add(line);
         }
         for (int i = 0; i < numPlanets; i++)
         {

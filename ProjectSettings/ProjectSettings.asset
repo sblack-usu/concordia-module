@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
+  companyName: concordia
   productName: concordia-module
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -155,7 +155,8 @@ PlayerSettings:
   resolutionScalingMode: 0
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
-  applicationIdentifier: {}
+  applicationIdentifier:
+    Lumin: com.realityvirtually.concordia
   buildNumber: {}
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 16
@@ -295,6 +296,10 @@ PlayerSettings:
     m_Devices:
     - Oculus
     - OpenVR
+  - m_BuildTarget: Lumin
+    m_Enabled: 1
+    m_Devices:
+    - Lumin
   m_BuildTargetEnableVuforiaSettings: []
   openGLRequireES31: 0
   openGLRequireES31AEP: 0
@@ -672,13 +677,38 @@ PlayerSettings:
     m_ModelFolderPath: 
     m_PortalFolderPath: 
   luminCert:
-    m_CertPath: 
+    m_CertPath: C:\Users\sblack\Desktop\magic-leap-privatekey/concordia.cert
     m_PrivateKeyPath: 
   luminIsChannelApp: 0
   luminVersion:
     m_VersionCode: 1
     m_VersionName: 
-  luminPrivilege: []
+  luminPrivilege:
+  - LocalAreaNetwork
+  - PwFoundObjRead
+  - AddressBookWrite
+  - AddressBookRead
+  - AudioCaptureMic
+  - CameraCapture
+  - AudioRecognizer
+  - VoiceInput
+  - ConnectBackgroundMusicService
+  - ControllerPose
+  - GesturesConfig
+  - GesturesSubscribe
+  - IdentityRead
+  - InAppPurchase
+  - Internet
+  - MusicService
+  - ScreensProvider
+  - BackgroundDownload
+  - WorldReconstruction
+  - BackgroundUpload
+  - BatteryInfo
+  - DrmCertificates
+  - NormalNotificationsUsage
+  - PowerInfo
+  - RegisterBackgroundMusicService
   luminMinimumPlatformAPILevel: 3
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
