@@ -44,6 +44,7 @@ public class ConcordiaOSCReceiver : MonoBehaviour {
 
     void Start()
     {
+        Debug.Log("Starting up");
         // init OSC
         OSCHandler.Instance.Init();
 
@@ -51,16 +52,20 @@ public class ConcordiaOSCReceiver : MonoBehaviour {
         if (oscMode == OscMode.SEND || oscMode == OscMode.SEND_RECEIVE)
         {
             OSCHandler.Instance.CreateClient("myClient", IPAddress.Parse(outIP), outPort);
+
         }
 
         if (oscMode == OscMode.RECEIVE || oscMode == OscMode.SEND_RECEIVE)
         {
+            Debug.Log("Setup receiving");
             // Initialize OSC servers (listeners)
             myServer = OSCHandler.Instance.CreateServer("myServer", inPort);
             // Set buffer size (bytes) of the server (default 1024)
             myServer.ReceiveBufferSize = rxBufferSize;
             // Set the sleeping time of the thread (default 10)
             myServer.SleepMilliseconds = sleepMs;
+
+            Debug.Log("Finished setting up receiving");
         }
     }
 
@@ -91,6 +96,8 @@ public class ConcordiaOSCReceiver : MonoBehaviour {
     // Process OSC message
     private void receivedOSC(OSCPacket pckt)
     {
+
+        Debug.Log("received message");
         if (pckt == null)
         {
             Debug.Log("Empty packet");

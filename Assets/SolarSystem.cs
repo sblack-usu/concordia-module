@@ -14,6 +14,8 @@ public class SolarSystem : MonoBehaviour {
         ConcordiaOSCReceiver.OnReceive -= Receive;
     }
 
+    public TextMesh date;
+    public float scale = 1f;
     public int numPlanets = 2;
     public Planet planetPrefab;
     List<Planet> planets = new List<Planet>();
@@ -54,6 +56,7 @@ public class SolarSystem : MonoBehaviour {
             line.positionCount = planets.Count;
             for(int i=0; i<planets.Count; i++)
             {
+                Debug.Log(i + " " + planets[i].transform.position);
                 line.SetPosition(i, planets[i].transform.position);
             }
 
@@ -62,8 +65,9 @@ public class SolarSystem : MonoBehaviour {
 
     void Receive(PlanetPacket p0, PlanetPacket p1)
     {
-        planets[0].transform.position = p0.GetCoordinates();
-        planets[1].transform.position = p1.GetCoordinates();
+        planets[0].transform.position = p0.GetCoordinates() * scale;
+        planets[1].transform.position = p1.GetCoordinates() * scale;
         incomingDate = p0.GetDate();
+        date.text = p0.GetDate();
     }
 }
