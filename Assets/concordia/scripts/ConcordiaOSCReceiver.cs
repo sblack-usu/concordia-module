@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
-using UnityOSC;
+using OSCsharp.Net;
+using OSCsharp.Data;
 
 public struct PlanetPacket
 {
@@ -34,7 +35,8 @@ public class ConcordiaOSCReceiver : MonoBehaviour {
     public int outPort = 9999;
     public int inPort = 4002;
 
-    private OSCServer myServer;
+    private UDPReceiver udpReceiver;
+    private UDPTransmitter udpTransmitter;
     private int bufferSize = 100; // Buffer size of the application (stores 100 messages from different servers)
     private int rxBufferSize = 1024;
     private int sleepMs = 10;
@@ -45,25 +47,20 @@ public class ConcordiaOSCReceiver : MonoBehaviour {
     void Start()
     {
         Debug.Log("Starting up");
-        // init OSC
-        OSCHandler.Instance.Init();
 
         // Initialize OSC clients (transmitters)
         if (oscMode == OscMode.SEND || oscMode == OscMode.SEND_RECEIVE)
         {
-            OSCHandler.Instance.CreateClient("myClient", IPAddress.Parse(outIP), outPort);
-
+            udpTransmitter = new UDPTransmitter(outIP, outPort);
+            udpTransmitter.Connect();
         }
 
         if (oscMode == OscMode.RECEIVE || oscMode == OscMode.SEND_RECEIVE)
         {
             Debug.Log("Setup receiving");
-            // Initialize OSC servers (listeners)
-            myServer = OSCHandler.Instance.CreateServer("myServer", inPort);
-            // Set buffer size (bytes) of the server (default 1024)
-            myServer.ReceiveBufferSize = rxBufferSize;
-            // Set the sleeping time of the thread (default 10)
-            myServer.SleepMilliseconds = sleepMs;
+            udpReceiver = new UDPReceiver(inPort, false);
+            udpReceiver.MessageReceived += receivedOSC;
+            udpReceiver.Start();
 
             Debug.Log("Finished setting up receiving");
         }
@@ -72,49 +69,46 @@ public class ConcordiaOSCReceiver : MonoBehaviour {
     // Reads all the messages received between the previous update and this one
     void Update()
     {
-        if (oscMode == OscMode.RECEIVE || oscMode == OscMode.SEND_RECEIVE)
-        {
-            // Read received messages
-            for (var i = 0; i < OSCHandler.Instance.packets.Count; i++)
-            {
-                // Process OSC
-                receivedOSC(OSCHandler.Instance.packets[i]);
-                // Remove them once they have been read.
-                OSCHandler.Instance.packets.Remove(OSCHandler.Instance.packets[i]);
-                i--;
-            }
-        }
 
         // Send random number to the client
         if (oscMode == OscMode.SEND || oscMode == OscMode.SEND_RECEIVE)
         {
             float randVal = UnityEngine.Random.Range(0f, 0.7f);
-            OSCHandler.Instance.SendMessageToClient("myClient", "/1/fader1", randVal);
+            OscMessage msg = new OscMessage("/test", randVal);
+            udpTransmitter.Send(msg);
+            //OscPacket packet = new OscPacket()
+            //udpTransmitter.Send()
+            //OSCHandler.Instance.SendMessageToClient("myClient", "/1/fader1", randVal);
+        }
+
+        if (OnReceive != null)
+        {
+            while (planets.Count != 0)
+            {
+                PlanetPacket[] p = planets.Dequeue();
+                OnReceive(p[0], p[1]);
+            }
         }
     }
 
-    // Process OSC message
-    private void receivedOSC(OSCPacket pckt)
-    {
+    Queue<PlanetPacket[]> planets = new Queue<PlanetPacket[]>();
 
+    // Process OSC message
+    private void receivedOSC(object sender, OscMessageReceivedEventArgs oscMessageReceivedEventArgs)
+    {
+        OscMessage msg = oscMessageReceivedEventArgs.Message;
+        
         Debug.Log("received message");
-        if (pckt == null)
+        if (msg.Data.Count == 0)
         {
             Debug.Log("Empty packet");
             return;
         }
-
-        float x = 0f;
-        OSCMessage msg = pckt.Data[0] as UnityOSC.OSCMessage;
+        
         string date = (string)msg.Data[0];
         PlanetPacket p0 = new PlanetPacket(date, new Vector3((float)msg.Data[1], (float)msg.Data[2], (float)msg.Data[3]));
         PlanetPacket p1 = new PlanetPacket(date, new Vector3((float)msg.Data[4], (float)msg.Data[5], (float)msg.Data[6]));
-        //Debug.Log(date + " - " + planetIndex + " " + coordinates);
-
-        if (OnReceive != null)
-        {
-            OnReceive(p0, p1);
-        }
+        planets.Enqueue(new PlanetPacket[] { p0, p1 });
 
         /*
         // Origin
