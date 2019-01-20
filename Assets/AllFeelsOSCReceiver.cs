@@ -103,7 +103,7 @@ public class AllFeelsOSCReceiver : MonoBehaviour {
         }
         lastRingSignalTime = Time.time;
         Debug.Log("Received Signal Time " + lastRingSignalTime);
-        spinValue = (float)message.values[0];
+        spinValue = -(float)message.values[0];
     }
 
     private void ringSpinL(OscMessage message)
@@ -115,7 +115,7 @@ public class AllFeelsOSCReceiver : MonoBehaviour {
         }
         lastRingSignalTime = Time.time;
         Debug.Log("Received Signal Time " + lastRingSignalTime);
-        spinValue = -(float)message.values[0];
+        spinValue = (float)message.values[0];
     }
 
     private void rodMove(OscMessage message)
