@@ -8,12 +8,14 @@ public class SolarSystem : MonoBehaviour {
     {
         //ConcordiaOSCReceiver.OnReceive += Receive;
         ConcordiaCSV.OnReceive += Receive;
+        AllFeelsOSCReceiver.OnReceive += Receive;
     }
 
     private void OnDisable()
     {
         //ConcordiaOSCReceiver.OnReceive -= Receive;
         ConcordiaCSV.OnReceive -= Receive;
+        AllFeelsOSCReceiver.OnReceive -= Receive;
     }
 
     public TextMesh date;
@@ -61,7 +63,7 @@ public class SolarSystem : MonoBehaviour {
             line.positionCount = planets.Count;
             for(int i=0; i<planets.Count; i++)
             {
-                Debug.Log(i + " " + planets[i].transform.position * scale);
+                //Debug.Log(i + " " + planets[i].transform.position * scale);
                 line.SetPosition(i, planets[i].transform.position * scale);
             }
             line.SetWidth(scale * .5f, scale * .5f);

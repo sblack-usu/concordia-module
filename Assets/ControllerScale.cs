@@ -39,7 +39,7 @@ public class ControllerScale : MonoBehaviour {
 
     private void ScaleDown(byte controllerId, MLInputControllerButton button)
     {
-        solarSystem.scale = .001f;
+        solarSystem.scale = .0001f;
     }
     private void HandleControllerTouchpadGestureContinue(byte controllerId, MLInputControllerTouchpadGesture gesture)
     {

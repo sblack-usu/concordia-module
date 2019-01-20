@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
-using OSCsharp.Net;
-using OSCsharp.Data;
+//using OSCsharp.Net;
+//using OSCsharp.Data;
 
 public struct PlanetPacket
 {
@@ -25,7 +25,7 @@ public struct PlanetPacket
         return coordinates;
     }
 }
-
+/*
 public class ConcordiaOSCReceiver : MonoBehaviour {
 
 
@@ -122,6 +122,7 @@ public class ConcordiaOSCReceiver : MonoBehaviour {
 
         // Print out messages
         Debug.Log("Input port: " + serverPort.ToString() + "\nAddress: " + address + "\nData [0]: " + data0);
-		*/
+		
     }
 }
+*/
