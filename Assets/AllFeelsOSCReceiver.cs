@@ -22,6 +22,8 @@ public class AllFeelsOSCReceiver : MonoBehaviour {
 
         osc.SetAddressHandler("/rod", rodMove);
         MLPrivileges.Start();
+
+        ring.maxAngularVelocity = .4f;
     }
 
     public delegate void PacketReceiveAction(PlanetPacket p0, PlanetPacket p1);
@@ -52,7 +54,7 @@ public class AllFeelsOSCReceiver : MonoBehaviour {
         if (spinValue != 0f)
         {
             
-            ring.AddTorque(rotationAxis * spinValue);
+            ring.AddTorque(rotationAxis * spinValue * .01f);
             if (lastRingSignalTime < Time.time + 2f)
             {
                 spinValue = 0f;
