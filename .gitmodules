@@ -5,3 +5,6 @@
 [submodule "Tools-submodules/ConcordiaReceiver"]
 	path = Tools-submodules/ConcordiaReceiver
 	url = https://github.com/n1ckfg/ConcordiaReceiver
+[submodule "Tools-submodules/Concordia_Sound"]
+	path = Tools-submodules/Concordia_Sound
+	url = https://github.com/luckandrew/Concordia_Sound
