@@ -219,7 +219,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 527250471}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 19a7e5eb15d40d041a1c919d4f7f6a04, type: 3}
   m_Name: 
@@ -251,7 +251,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   osc: {fileID: 1729404331}
-  csv: {fileID: 527250475}
 --- !u!1 &583747287
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,6 +294,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _privileges: ab000000
+--- !u!1 &660543457
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 660543459}
+  - component: {fileID: 660543458}
+  m_Layer: 0
+  m_Name: Sender Nick
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &660543458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 660543457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5107ac578e0432d4b8aa3ed57891d3f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  osc: {fileID: 1846232110}
+  solarSystem: {fileID: 1526036215}
+  sendInterval: 1
+--- !u!4 &660543459
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 660543457}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 120}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &679960678
 Prefab:
   m_ObjectHideFlags: 0
@@ -443,6 +485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32b95e515628fa3428a1baeca6167071, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  osc: {fileID: 1729404331}
 --- !u!136 &703474912
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -927,6 +970,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d7968190358c9c4ca8c886cd4d4c2a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lines: []
   numLines: 1000
   linePrefab: {fileID: 120829236415973794, guid: 2fd6100cc1eb63747ba504ff57e33065,
     type: 2}
@@ -1012,7 +1056,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.5
+  m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -1072,8 +1116,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inPort: 6969
-  outIP: 127.0.0.1
-  outPort: 6161
+  outIP: 10.189.105.106
+  outPort: 6970
 --- !u!1 &1775637446
 GameObject:
   m_ObjectHideFlags: 0
@@ -1135,6 +1179,49 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1846232109
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1846232111}
+  - component: {fileID: 1846232110}
+  m_Layer: 0
+  m_Name: OSC nick
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1846232110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1846232109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0648f23ec1abe6849b243b8be84ea2e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inPort: 6968
+  outIP: 192.168.43.238
+  outPort: 6967
+--- !u!4 &1846232111
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1846232109}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2143679308
 GameObject:

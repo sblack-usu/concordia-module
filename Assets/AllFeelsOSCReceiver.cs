@@ -9,26 +9,28 @@ public class AllFeelsOSCReceiver : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        osc.SetAddressHandler("/draw", receivedOSC);
+        osc.SetAddressHandler("/date", receiveDraw);
+
+        osc.SetAddressHandler("/glove", receiveGlove);
         MLPrivileges.Start();
     }
 
     public delegate void PacketReceiveAction(PlanetPacket p0, PlanetPacket p1);
     public static event PacketReceiveAction OnReceive;
 
-    public delegate void GloveReceiveeAction(PlanetPacket p0, PlanetPacket p1);
+    public delegate void GloveReceiveeAction(float code, float value);
     public static event GloveReceiveeAction OnGloveReceive;
 
-    public ConcordiaCSV csv;
+    //public ConcordiaCSV csv;
 
     bool gloves = false;
     // Reads all the messages received between the previous update and this one
     void Update()
     {
-        if (gloves)
+        if (OnGloveReceive != null)
         {
-            gloves = false;
-            csv.StartCoordinates();
+            OnGloveReceive(0, 0);
+            //csv.StartCoordinates();
         }
         if (OnReceive != null)
         {
@@ -41,9 +43,10 @@ public class AllFeelsOSCReceiver : MonoBehaviour {
     }
 
     Queue<PlanetPacket[]> planets = new Queue<PlanetPacket[]>();
+    Queue<float[]> gloveSignals = new Queue<float[]>();
 
     // Process OSC message
-    private void receivedOSC(OscMessage msg)
+    private void receiveDraw(OscMessage msg)
     {
 
         gloves = true;
@@ -53,25 +56,21 @@ public class AllFeelsOSCReceiver : MonoBehaviour {
             Debug.Log("Empty packet");
             return;
         }
-        /*
+
         string date = (string)msg.values[0];
         PlanetPacket p0 = new PlanetPacket(date, new Vector3((float)msg.values[1], (float)msg.values[2], (float)msg.values[3]));
         PlanetPacket p1 = new PlanetPacket(date, new Vector3((float)msg.values[4], (float)msg.values[5], (float)msg.values[6]));
         planets.Enqueue(new PlanetPacket[] { p0, p1 });
-        */
-        /*
-        // Origin
-        int serverPort = pckt.server.ServerPort;
+    }
 
-        // Address
-        string address = pckt.Address.Substring(1);
-
-        // Data at index 0
-        string data0 = pckt.Data.Count != 0 ? pckt.Data[0].ToString() : "null";
-
-        // Print out messages
-        Debug.Log("Input port: " + serverPort.ToString() + "\nAddress: " + address + "\nData [0]: " + data0);
-		*/
+    private void receiveGlove(OscMessage message)
+    {
+        if (message.values.Count == 0)
+        {
+            Debug.Log("Empty packet");
+            return;
+        }
+        gloveSignals.Enqueue(new float[] { (float)message.values[0], (float)message.values[1] });
     }
 
 

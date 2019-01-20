@@ -8,18 +8,18 @@ public class SolarSystem : MonoBehaviour {
     {
         //ConcordiaOSCReceiver.OnReceive += Receive;
         ConcordiaCSV.OnReceive += Receive;
-        //AllFeelsOSCReceiver.OnReceive += Receive;
+        AllFeelsOSCReceiver.OnReceive += Receive;
     }
 
     private void OnDisable()
     {
         //ConcordiaOSCReceiver.OnReceive -= Receive;
         ConcordiaCSV.OnReceive -= Receive;
-        //AllFeelsOSCReceiver.OnReceive -= Receive;
+        AllFeelsOSCReceiver.OnReceive -= Receive;
     }
     
     List<Vector3[]> coordinates = new List<Vector3[]>();
-    List<LineRenderer> lines = new List<LineRenderer>();
+    public List<LineRenderer> lines = new List<LineRenderer>();
     public int numLines = 100;
     public LineRenderer linePrefab;
 
