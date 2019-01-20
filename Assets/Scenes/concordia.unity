@@ -219,7 +219,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 527250471}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 19a7e5eb15d40d041a1c919d4f7f6a04, type: 3}
   m_Name: 
@@ -250,6 +250,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39c40115bc9b8b5429e12cb67c34d8e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ring: {fileID: 1713782176}
+  rod: {fileID: 703474917}
   osc: {fileID: 1729404331}
 --- !u!1 &583747287
 GameObject:
@@ -422,6 +424,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 268bd5f94d5896b4eacd34f5def843a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &679960686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 679960680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b290dd4b8adb73e47a159d97f9db88ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ring: {fileID: 0}
+  rod: {fileID: 0}
+  ringforceMultiplier: 1
+  rodforceMultiplier: 1
+  ringRotationAxis: {x: 0, y: 0, z: 1}
+  _controllerConnectionHandler: {fileID: 0}
+  solarSystem: {fileID: 0}
 --- !u!1 &690311216
 GameObject:
   m_ObjectHideFlags: 0
@@ -1055,8 +1075,8 @@ Rigidbody:
   m_GameObject: {fileID: 1713782174}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0
+  m_Drag: 0.5
+  m_AngularDrag: 0.1
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -1116,7 +1136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inPort: 6969
-  outIP: 10.189.105.106
+  outIP: 192.168.8.35
   outPort: 6970
 --- !u!1 &1775637446
 GameObject:
