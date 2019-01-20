@@ -8,22 +8,16 @@ public class SolarSystem : MonoBehaviour {
     {
         //ConcordiaOSCReceiver.OnReceive += Receive;
         ConcordiaCSV.OnReceive += Receive;
-        AllFeelsOSCReceiver.OnReceive += Receive;
+        //AllFeelsOSCReceiver.OnReceive += Receive;
     }
 
     private void OnDisable()
     {
         //ConcordiaOSCReceiver.OnReceive -= Receive;
         ConcordiaCSV.OnReceive -= Receive;
-        AllFeelsOSCReceiver.OnReceive -= Receive;
+        //AllFeelsOSCReceiver.OnReceive -= Receive;
     }
-
-    public TextMesh date;
-    public float scale = 1f;
-    float currentScale;
-    public int numPlanets = 2;
-    public Planet planetPrefab;
-    List<Planet> planets = new List<Planet>();
+    
     List<Vector3[]> coordinates = new List<Vector3[]>();
     List<LineRenderer> lines = new List<LineRenderer>();
     public int numLines = 100;
@@ -31,63 +25,44 @@ public class SolarSystem : MonoBehaviour {
 
     void Start()
     {
-        currentScale = scale;
-        for(int i=0; i< numLines; i++)
+        lineParent.transform.parent = transform;
+        //currentScale = scale;
+        for (int i=0; i< numLines; i++)
         {
             LineRenderer line = Instantiate(linePrefab);
-            line.transform.parent = transform;
+            line.name = i.ToString();
+            line.transform.parent = lineParent.transform;
             lines.Add(line);
-        }
-        for (int i = 0; i < numPlanets; i++)
-        {
-            planets.Add(Instantiate(planetPrefab));
         }
     }
 
-    string currentDate = "";
-    string incomingDate = "";
-
     int currentLineIndex = 0;
+    public GameObject lineParent;
 
     void Update()
     {
-        if(!currentDate.Equals(incomingDate))
+        if(positionsQueue.Count > 0)
         {
-            currentDate = incomingDate;
             LineRenderer line = lines[currentLineIndex];
             currentLineIndex++;
             if(currentLineIndex >= lines.Count)
             {
                 currentLineIndex = 0;
             }
-            line.positionCount = planets.Count;
-            for(int i=0; i<planets.Count; i++)
-            {
-                //Debug.Log(i + " " + planets[i].transform.position * scale);
-                line.SetPosition(i, planets[i].transform.position * scale);
-            }
-            line.SetWidth(scale * .5f, scale * .5f);
-            coordinates.Add(new Vector3[] { planets[0].transform.position, planets[1].transform.position });
+            line.useWorldSpace = false;
+            line.positionCount = 2;
+            Vector3[] positions = positionsQueue.Dequeue();
+            line.SetPosition(0, positions[0]);
+            line.SetPosition(1, positions[1]);
+            line.GetComponent<AlignCapsule>().Align(positions[0], positions[1]);
 
-        }
-        if(scale != currentScale)
-        {
-            for(int i=0; i<coordinates.Count; i++)
-            {
-                LineRenderer line = lines[i];
-                line.SetPosition(0, coordinates[i][0] * scale);
-                line.SetPosition(1, coordinates[i][1] * scale);
-                line.SetWidth(scale * .5f, scale * .5f);
-            }
-            currentScale = scale;
         }
     }
 
+    Queue<Vector3[]> positionsQueue = new Queue<Vector3[]>();
+
     void Receive(PlanetPacket p0, PlanetPacket p1)
     {
-        planets[0].transform.position = p0.GetCoordinates();
-        planets[1].transform.position = p1.GetCoordinates();
-        incomingDate = p0.GetDate();
-        date.text = p0.GetDate();
+        positionsQueue.Enqueue(new Vector3[] { p0.GetCoordinates(), p1.GetCoordinates() });
     }
 }

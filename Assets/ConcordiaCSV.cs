@@ -20,6 +20,7 @@ public class ConcordiaCSV : MonoBehaviour {
                 parsed.Enqueue(new PlanetPacket[] { new PlanetPacket(data[1], new Vector3(float.Parse(data[2]), float.Parse(data[3]), float.Parse(data[4]))), new PlanetPacket(data[1], new Vector3(float.Parse(data[5]), float.Parse(data[6]), float.Parse(data[7]))) });
             }
         }
+        StartCoroutine(WalkCoordinates());
     }
 	
 	IEnumerator WalkCoordinates () {

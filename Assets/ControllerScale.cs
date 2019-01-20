@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.XR.MagicLeap;
 
 public class ControllerScale : MonoBehaviour {
-
+    /*
     #region Private Variables
     private ControllerConnectionHandler _controllerConnectionHandler;
 
@@ -53,4 +53,5 @@ public class ControllerScale : MonoBehaviour {
             solarSystem.scale -= gesture.Speed * 1000f;
         }
     }
+    */
 }
