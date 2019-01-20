@@ -2,3 +2,6 @@
 	path = Assets/UnityOSC
 	url = git@github.com:n1ckfg/UnityOSC.git
 	branch = master
+[submodule "Tools-submodules/ConcordiaReceiver"]
+	path = Tools-submodules/ConcordiaReceiver
+	url = https://github.com/n1ckfg/ConcordiaReceiver
